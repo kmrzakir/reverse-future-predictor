@@ -235,6 +235,7 @@
             .value.trim();
           const course = document.getElementById("course").value.trim();
           const hobbies = document.getElementById("hobbies").value.trim();
+
           if (isValid) {
             const formData = {
               name,
@@ -244,11 +245,55 @@
               hobbies,
             };
 
-            // Store the data in localStorage
-            localStorage.setItem("formData", JSON.stringify(formData));
+            // Change submit button to show loading state
+            const submitButton = form.querySelector('input[type="submit"]');
+            const originalButtonText = submitButton.value;
+            submitButton.value = "Processing...";
+            submitButton.disabled = true;
 
-            // Redirect to homePage.html
-            window.location.href = "resultPage.html";
+            // Send POST request to the API with proper fetch settings for CORS
+            fetch("https://reverse-future-predictor.onrender.com/api/roadmap", {
+              method: "POST",
+              mode: "cors", // This is important for cross-origin requests
+              body: JSON.stringify(formData),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(
+                    `Server responded with status: ${response.status}`
+                  );
+                }
+                return response.json();
+              })
+              .then((data) => {
+                // Store both the form data and the API response
+                localStorage.setItem("formData", JSON.stringify(formData));
+                localStorage.setItem("predictionResult", JSON.stringify(data));
+
+                // Redirect to result page
+                window.location.href = "resultPage.html";
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+
+                if (
+                  error.message.includes("NetworkError") ||
+                  error.message.includes("Failed to fetch") ||
+                  error.message.includes("CORS")
+                ) {
+                  alert(
+                    "Cross-origin request failed. This is likely a CORS issue with the server.\n\n" +
+                      "Please make sure the server allows requests from: " +
+                      window.location.origin
+                  );
+                } else {
+                  alert("Something went wrong: " + error.message);
+                }
+
+                // Reset button state
+                submitButton.value = originalButtonText;
+                submitButton.disabled = false;
+              });
           }
         });
       });
