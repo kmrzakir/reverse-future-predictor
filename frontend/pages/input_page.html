@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reverse Future Predictor</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles//input_page.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Reverse Future Predictor</h1>
+      <p class="sub_title">
+        Enter some of your basic information, and we will predict your future as
+        well as a roadmap.
+      </p>
+
+      <form id="futureForm">
+        <!-- Name Field -->
+        <label for="name">Name</label>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          name="name"
+          id="name"
+        />
+        <div class="error" id="nameError">Please enter your name.</div>
+
+        <!-- Favorite Subjects Field -->
+
+        <div class="input-group">
+          <label
+            >Favorite Subjects
+
+            <input
+              type="text"
+              placeholder="Most favorite subject"
+              name="mostFavSubject"
+              id="mostFavSubject"
+            />
+          </label>
+          <label
+            >Least Favorite Subjects
+
+            <input
+              type="text"
+              placeholder="Least favorite subject"
+              name="leastFavSubject"
+              id="leastFavSubject"
+            />
+          </label>
+        </div>
+        <div class="error" id="subjectError">
+          Please enter both favorite and least favorite subjects.
+        </div>
+
+        <!-- Course Field -->
+        <label for="course">Course</label>
+        <input
+          type="text"
+          placeholder="Enter your course"
+          name="course"
+          id="course"
+        />
+        <div class="error" id="courseError">Please enter your course.</div>
+
+        <!-- Hobbies Field -->
+        <label for="hobbies">Hobbies</label>
+        <input
+          type="text"
+          placeholder="Enter your hobbies"
+          name="hobbies"
+          id="hobbies"
+        />
+        <div class="error" id="hobbiesError">Please enter your hobbies.</div>
+
+        <!-- Submit Button -->
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+
+    <!-- Transition Container -->
+    <div id="transition-container"></div>
+
+    <script src="../script//input_page.js"></script>
+  </body>
+</html>

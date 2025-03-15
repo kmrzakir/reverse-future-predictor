@@ -1,0 +1,21 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Roadmap Generator</title>
+  </head>
+  <body>
+    <h1>Machine Learning Roadmap</h1>
+    <div id="roadmap">Click "Next" to generate the roadmap.</div>
+    <button id="nextBtn">Next</button>
+
+    <script>
+      document.getElementById("nextBtn").addEventListener("click", async () => {
+        const response = await fetch("http://localhost:3000/api/roadmap");
+        const data = await response.json();
+        document.getElementById("roadmap").innerText = data.text;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Home Page</title>
+    <style>
+      body {
+        background-image: url(../assets/bg_image2.jpg);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100dvh;
+        margin: 0;
+        font-family: sans-serif;
+        background-color: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+      }
+      .title {
+        font-family: "Caveat Brush", cursive;
+      }
+      h1 {
+        font-size: 2.5rem;
+        text-align: center;
+      }
+      #typing-effect {
+        font-size: 1rem;
+        line-height: 2rem;
+        white-space: pre-wrap; /* Preserve line breaks */
+        overflow: hidden; /* Hide overflow */
+        border-right: 2px solid #fff; /* Cursor effect */
+        width: 80%;
+        max-width: 1000px;
+        max-height: 500px;
+        text-align: justify;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        overflow-y: scroll;
+        margin: 0 auto;
+        background: linear-gradient(
+          135deg,
+          rgba(30, 29, 28, 0.281),
+          rgba(46, 45, 44, 0.407)
+        );
+
+        padding: 10px;
+      }
+
+      #typing-effect::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+      }
+
+      /* Container for the loading animation */
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full viewport height */
+        font-size: 24px;
+        color: #333;
+      }
+
+      /* Loading text with dots */
+      .loading-text {
+        display: flex;
+        align-items: center;
+        color: white;
+      }
+
+      /* Individual dots (small circles) */
+      .loading-text span {
+        display: inline-block;
+        width: 5px; /* Small circle size */
+        height: 5px; /* Small circle size */
+        margin-left: 5px;
+        border-radius: 50%; /* Makes it circular */
+        background-color: white; /* Circle color */
+        opacity: 0.3; /* Default low intensity */
+        animation: blink-dots 1.5s infinite ease-in-out;
+      }
+
+      /* Delay animations for each dot */
+      .loading-text span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .loading-text span:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .loading-text span:nth-child(3) {
+        animation-delay: 1s;
+      }
+
+      /* Blinking dots animation */
+      @keyframes blink-dots {
+        0%,
+        100% {
+          opacity: 0.3; /* Low intensity */
+        }
+        50% {
+          opacity: 1; /* High intensity */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Your Future, But in Reverse Gear! 😶‍🌫️😶‍🌫️😶‍🌫️</h1>
+    <!-- loader -->
+    <div class="loading-container">
+      <div class="loading-text">
+        Generating
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="typing-effect"></div>
+
+    <script>
+      const loading_container = document.querySelector(".loading-container");
+      const typing_effect = document.querySelector("#typing-effect");
+
+      // hide the typing_effect and enable when data is fetched
+      typing_effect.style.display = "none";
+
+      const formData = JSON.parse(localStorage.getItem("formData"));
+      console.log("form data is ", formData); // This will now be a valid object
+
+      console.log(`Form data is ${formData}`);
+
+      fetchData(formData)
+        .then((data) => {
+          console.log("Received data:", data);
+          loading_container.style.display = "none";
+          typing_effect.style.display = "block";
+          typeText(typingElement, data.text);
+        })
+        .catch((err) => {
+          console.log("some error has occured while fetching data");
+        });
+
+      // fetch data from api
+
+      async function fetchData(fromData) {
+        try {
+          const response = await fetch("http://localhost:3000/api/roadmap", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(fromData),
+          });
+
+          const data = await response.json();
+          console.log("Response from server:", data);
+          return data;
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      // Function to simulate typing effect
+      function typeText(element, text, speed = 25) {
+        let index = 0;
+        const interval = setInterval(() => {
+          element.textContent += text[index];
+          index++;
+          if (index === text.length) {
+            clearInterval(interval);
+          }
+        }, speed);
+      }
+
+      // Start the typing effect
+      const typingElement = document.getElementById("typing-effect");
+    </script>
+  </body>
+</html>

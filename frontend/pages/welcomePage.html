@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Background Video</title>
+
+    <style>
+      /* Style for the video container */
+      body {
+        font-family: "Caveat Brush", cursive; /* font family */
+        margin: 0;
+        padding: 0;
+        height: 100vh; /* Full viewport height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      :root {
+        --ff-size: 10px;
+      }
+
+      .video-container {
+        position: fixed; /* Stays fixed while scrolling */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        z-index: -1; /* Sends it to the background */
+      }
+
+      /* Style for the video */
+      .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures it covers the whole screen */
+      }
+
+      /* Black shade overlay */
+      .video-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        ); /* Radial gradient for edge intensity */
+        z-index: 1; /* Places the overlay above the video */
+      }
+
+      /* Content over the video */
+      .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        text-align: center;
+        color: white;
+        z-index: 2; /* Ensures content is above the overlay */
+        width: 100%; /* Full width */
+        height: 100%;
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Perfect centering */
+      }
+
+      /* Get Started Button */
+      button {
+        margin-top: 2rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem; /* Default font size */
+        font-weight: 600;
+        color: black;
+        background: linear-gradient(to right, #ffffff, #ff69b4);
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: "Caveat Brush", cursive; /* font family */
+      }
+
+      button:hover {
+        background: linear-gradient(to right, #b3005e, #000000);
+        color: white;
+        transform: scale(1.05);
+      }
+
+      /* Typing Effect Container */
+      .container {
+        display: inline-block;
+        font-size: 2.5rem; /* Default font size */
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap; /* Prevent text from wrapping */
+        overflow: hidden; /* Hide overflow */
+        border-right: 2px solid #fff; /* Cursor effect */
+        animation: blinkCursor 0.75s infinite;
+      }
+
+      /* Cursor Blink Animation */
+      @keyframes blinkCursor {
+        from {
+          border-right-color: transparent;
+        }
+        to {
+          border-right-color: #fff;
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        /* Adjust font size for smaller screens */
+        .container {
+          font-size: 2rem;
+        }
+
+        button {
+          font-size: 0.9rem;
+          padding: 0.6rem 1.2rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* Adjust font size for very small screens */
+        .container {
+          font-size: 1.5rem;
+        }
+
+        button {
+          font-size: 0.8rem;
+          padding: 0.5rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-container">
+      <video autoplay muted loop>
+        <source src="../assets/animated_back.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="content">
+      <!-- Typing Effect Container -->
+      <div class="container" id="typing-effect"></div>
+
+      <br />
+
+      <!-- Get Started Button -->
+      <!-- input_page.html -->
+      <button onclick="window.location.href = 'input_page2.html'">
+        Get Started
+      </button>
+    </div>
+
+    <script>
+      // Text to display with typing effect
+      const text = "Welcome To Reverse Future Predictor";
+
+      // Function to simulate typing effect
+      function typeText(element, text, speed = 100) {
+        let index = 0;
+        const interval = setInterval(() => {
+          element.textContent += text[index];
+          index++;
+          if (index === text.length) {
+            clearInterval(interval);
+          }
+        }, speed);
+      }
+
+      // Start the typing effect
+      const typingElement = document.getElementById("typing-effect");
+      typeText(typingElement, text);
+    </script>
+  </body>
+</html>
