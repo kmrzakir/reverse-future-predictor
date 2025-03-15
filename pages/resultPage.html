@@ -155,9 +155,10 @@
 
       async function fetchData(fromData) {
         try {
-          const response = await fetch("http://localhost:3000/api/roadmap", {
+          const response = await fetch("https://reverse-future-predictor.onrender.com/api/roadmap", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            mode: "cors",
             body: JSON.stringify(fromData),
           });
 
