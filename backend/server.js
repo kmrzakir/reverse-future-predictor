@@ -17,6 +17,7 @@ app.use(
       const allowedOrigins = [
         "http://127.0.0.1:5500",
         "http://localhost:5500",
+        "https://zakirdar.me/reverse-future-predictor/",
         "https://kmrzakir.github.io/reverse-future-predictor",
         "https://reverse-future-predictor.onrender.com" // Deployed frontend
 ];
