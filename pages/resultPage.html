@@ -20,46 +20,97 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100dvh;
+        min-height: 100dvh; /* Changed from height to min-height to allow content growth */
         margin: 0;
         font-family: sans-serif;
-        background-color: radial-gradient(
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow-y: auto; /* Allow scrolling when content grows */
+      }
+      
+      /* Enhanced overlay with better gradient */
+      body::before {
+        content: "";
+        position: fixed; /* Changed from absolute to fixed */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
           circle,
           rgba(0, 0, 0, 0.5) 0%,
-          rgba(0, 0, 0, 0.8) 100%
+          rgba(0, 0, 0, 0.9) 100%
         );
+        z-index: -1;
       }
+      
       .title {
         font-family: "Caveat Brush", cursive;
+        text-shadow: 2px 2px 8px rgba(179, 0, 94, 0.8);
+        margin-bottom: 20px;
+        letter-spacing: 1px;
       }
+      
       h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         text-align: center;
+        animation: glow 2s ease-in-out infinite alternate;
       }
+      
+      /* Adding subtle glow to the title */
+      @keyframes glow {
+        from {
+          text-shadow: 2px 2px 8px rgba(179, 0, 94, 0.5);
+        }
+        to {
+          text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+        }
+      }
+      
       #typing-effect {
-        font-size: 1rem;
+        font-size: 1.1rem;
         line-height: 2rem;
         white-space: pre-wrap; /* Preserve line breaks */
         overflow: hidden; /* Hide overflow */
-        border-right: 2px solid #fff; /* Cursor effect */
-        width: 80%;
+        border-right: 3px solid #ff69b4; /* Enhanced cursor effect */
+        width: 85%;
         max-width: 1000px;
-        max-height: 500px;
+        height: 380px; /* Fixed height regardless of content */
+        max-height: 380px;
         text-align: justify;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
         overflow-y: scroll;
         margin: 0 auto;
         background: linear-gradient(
           135deg,
-          rgba(30, 29, 28, 0.281),
-          rgba(46, 45, 44, 0.407)
+          rgba(30, 29, 28, 0.6),
+          rgba(46, 45, 44, 0.7)
         );
-
-        padding: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        animation: borderBlink 1s infinite alternate;
+        letter-spacing: 0.5px;
+        margin-top: 10px;
+        /* Add these properties for fixed width */
+        box-sizing: border-box;
+        word-wrap: break-word;
+      }
+      
+      /* Animated blinking cursor */
+      @keyframes borderBlink {
+        from { border-right-color: #ff69b4; }
+        to { border-right-color: transparent; }
       }
 
       #typing-effect::-webkit-scrollbar {
-        display: none; /* Chrome, Safari */
+        width: 5px;
+        background-color: rgba(0,0,0,0.2);
+      }
+      
+      #typing-effect::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 105, 180, 0.6);
+        border-radius: 5px;
       }
 
       /* Container for the loading animation */
@@ -67,9 +118,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh; /* Full viewport height */
+        height: 100vh;
         font-size: 24px;
-        color: #333;
       }
 
       /* Loading text with dots */
@@ -77,18 +127,21 @@
         display: flex;
         align-items: center;
         color: white;
+        font-size: 1.6rem;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
       }
 
       /* Individual dots (small circles) */
       .loading-text span {
         display: inline-block;
-        width: 5px; /* Small circle size */
-        height: 5px; /* Small circle size */
-        margin-left: 5px;
-        border-radius: 50%; /* Makes it circular */
-        background-color: white; /* Circle color */
-        opacity: 0.3; /* Default low intensity */
+        width: 7px;
+        height: 7px;
+        margin-left: 6px;
+        border-radius: 50%;
+        background-color: #ff69b4;
+        opacity: 0.3;
         animation: blink-dots 1.5s infinite ease-in-out;
+        box-shadow: 0 0 8px rgba(255, 105, 180, 0.5);
       }
 
       /* Delay animations for each dot */
@@ -102,20 +155,151 @@
         animation-delay: 1s;
       }
 
-      /* Blinking dots animation */
+      /* Enhanced blinking dots animation */
       @keyframes blink-dots {
-        0%,
-        100% {
-          opacity: 0.3; /* Low intensity */
+        0%, 100% {
+          opacity: 0.3;
+          transform: scale(1);
         }
         50% {
-          opacity: 1; /* High intensity */
+          opacity: 1;
+          transform: scale(1.5);
+          box-shadow: 0 0 12px rgba(255, 105, 180, 0.8);
         }
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+        
+        #typing-effect {
+          width: 90%;
+          padding: 15px;
+          height: 300px; /* Smaller fixed height for mobile */
+        }
+      }
+
+      /* User info section styling */
+      .user-info-section {
+        background: linear-gradient(
+          135deg,
+          rgba(179, 0, 94, 0.7),
+          rgba(70, 0, 70, 0.8)
+        );
+        width: 85%;
+        max-width: 1000px;
+        border-radius: 10px;
+        padding: 15px 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        display: none; /* Hidden initially */
+        animation: fadeIn 1s ease forwards;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .user-info-section h2 {
+        font-family: "Caveat Brush", cursive;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        text-align: center;
+        color: #ff99cc;
+      }
+      
+      .user-info-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      
+      .user-info-item {
+        width: 48%;
+        margin-bottom: 10px;
+      }
+      
+      .user-info-label {
+        font-weight: bold;
+        color: #ff99cc;
+        margin-bottom: 3px;
+      }
+      
+      .user-info-value {
+        color: white;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      
+      .prediction-section h2 {
+        font-family: "Caveat Brush", cursive;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        text-align: center;
+        color: #ff99cc;
+      }
+      
+      /* Mobile responsive adjustments */
+      @media (max-width: 768px) {
+        .user-info-item {
+          width: 100%; /* Full width on smaller screens */
+        }
+      }
+
+      /* Container to maintain proper layout */
+      .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+        margin-top: 10px;
       }
     </style>
   </head>
   <body>
     <h1 class="title">Your Future, But in Reverse Gear! 😶‍🌫️😶‍🌫️😶‍🌫️</h1>
+    
+    <div class="main-container">
+      <!-- User Info Section -->
+      <div class="user-info-section">
+        <h2>Your Details</h2>
+        <div class="user-info-container">
+          <div class="user-info-item">
+            <div class="user-info-label">Name:</div>
+            <div class="user-info-value" id="user-name"></div>
+          </div>
+          <div class="user-info-item">
+            <div class="user-info-label">Course:</div>
+            <div class="user-info-value" id="user-course"></div>
+          </div>
+          <div class="user-info-item">
+            <div class="user-info-label">Favorite Subject:</div>
+            <div class="user-info-value" id="user-fav-subject"></div>
+          </div>
+          <div class="user-info-item">
+            <div class="user-info-label">Least Favorite Subject:</div>
+            <div class="user-info-value" id="user-least-fav-subject"></div>
+          </div>
+          <div class="user-info-item">
+            <div class="user-info-label">Hobbies:</div>
+            <div class="user-info-value" id="user-hobbies"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Prediction Section -->
+      <div class="prediction-section">
+        <h2>Your Reverse Future</h2>
+        <div id="typing-effect"></div>
+      </div>
+    </div>
+    
     <!-- loader -->
     <div class="loading-container">
       <div class="loading-text">
@@ -126,17 +310,25 @@
       </div>
     </div>
 
-    <div id="typing-effect"></div>
-
     <script>
       const loading_container = document.querySelector(".loading-container");
       const typing_effect = document.querySelector("#typing-effect");
+      const user_info_section = document.querySelector(".user-info-section");
+      const prediction_section = document.querySelector(".prediction-section");
 
-      // hide the typing_effect and enable when data is fetched
+      // Hide the typing_effect and user info section initially
       typing_effect.style.display = "none";
+      prediction_section.style.display = "none";
 
       const formData = JSON.parse(localStorage.getItem("formData"));
-      console.log("form data is ", formData); // This will now be a valid object
+      console.log("form data is ", formData);
+
+      // Populate user info fields
+      document.getElementById("user-name").textContent = formData.name || "N/A";
+      document.getElementById("user-course").textContent = formData.course || "N/A";
+      document.getElementById("user-fav-subject").textContent = formData.mostFavSubject || "N/A";
+      document.getElementById("user-least-fav-subject").textContent = formData.leastFavSubject || "N/A";
+      document.getElementById("user-hobbies").textContent = formData.hobbies || "N/A";
 
       console.log(`Form data is ${formData}`);
 
@@ -144,11 +336,16 @@
         .then((data) => {
           console.log("Received data:", data);
           loading_container.style.display = "none";
+          
+          // Show both sections when data is loaded
+          user_info_section.style.display = "block";
+          prediction_section.style.display = "block";
           typing_effect.style.display = "block";
+          
           typeText(typingElement, data.text);
         })
         .catch((err) => {
-          console.log("some error has occured while fetching data");
+          console.log("some error has occurred while fetching data");
         });
 
       // fetch data from api
